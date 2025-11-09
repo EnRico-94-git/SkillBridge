@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.6</version> <!-- Mudando para versão estável -->
+        <version>3.3.0</version>
         <relativePath/>
     </parent>
 
@@ -17,11 +17,11 @@
 
     <properties>
         <java.version>21</java.version>
-        <spring-ai.version>0.8.1</spring-ai.version> <!-- Versão mais estável -->
-        <oracle.jdbc.version>21.11.0.0</oracle.jdbc.version>
-        <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <spring-ai.version>1.0.0-M4</spring-ai.version>
+        <oracle.jdbc.version>21.9.0.0</oracle.jdbc.version>
         <modelmapper.version>3.2.1</modelmapper.version>
         <hibernate-types.version>2.21.1</hibernate-types.version>
+        <springdoc.version>2.6.0</springdoc.version>
     </properties>
 
     <dependencies>
@@ -82,51 +82,51 @@
             <artifactId>caffeine</artifactId>
         </dependency>
 
-        <!-- JWT -->
+        <!-- JWT - Versão Estável -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
-            <version>0.12.5</version>
+            <version>0.12.3</version>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
-            <version>0.12.5</version>
+            <version>0.12.3</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
-            <version>0.12.5</version>
+            <version>0.12.3</version>
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Lombok -->
+        <!-- Lombok - Configuração Correta -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <scope>provided</scope>
         </dependency>
 
-        <!-- ModelMapper -->
+        <!-- ModelMapper - Versão Compatível -->
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
-            <version>${modelmapper.version}</version>
+            <version>3.1.1</version>
         </dependency>
 
-        <!-- Hibernate Types para JSON -->
+        <!-- Hibernate Types - Versão Compatível -->
         <dependency>
             <groupId>com.vladmihalcea</groupId>
             <artifactId>hibernate-types-60</artifactId>
-            <version>${hibernate-types.version}</version>
+            <version>2.20.0</version>
         </dependency>
 
-        <!-- SpringDoc OpenAPI -->
+        <!-- SpringDoc OpenAPI - Versão Compatível -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.5.0</version>
+            <version>2.4.0</version>
         </dependency>
 
         <!-- Actuator -->
@@ -173,6 +173,24 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- Plugin do Compiler para Java 21 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>
