@@ -1,4 +1,4 @@
 package com.example.SkillBridge.model;
 
-public enum UserRole {
+public enum TrainingLevel {
 }
