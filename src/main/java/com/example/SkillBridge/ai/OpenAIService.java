@@ -1,12 +1,8 @@
 package com.example.SkillBridge.ai;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.ai.chat.ChatClient;
-import org.springframework.ai.chat.ChatResponse;
-import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.ai.chat.prompt.PromptTemplate;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
-
 import java.util.Map;
 
 @Service
@@ -16,42 +12,43 @@ public class OpenAIService {
     private final ChatClient chatClient;
 
     public String generateCareerAdvice(String skills, String interests, String goals) {
-        PromptTemplate promptTemplate = new PromptTemplate(AIConstants.CAREER_ADVICE_PROMPT_TEMPLATE);
-        Prompt prompt = promptTemplate.create(Map.of(
-                "skills", skills,
-                "interests", interests,
-                "goals", goals
-        ));
+        String prompt = String.format(AIConstants.CAREER_ADVICE_PROMPT_TEMPLATE,
+                skills, interests, goals);
 
-        ChatResponse response = chatClient.call(prompt);
-        return response.getResult().getOutput().getContent();
+        return chatClient.prompt()
+                .user(prompt)
+                .call()
+                .content();
     }
 
     public String analyzeSkillGaps(String currentSkills) {
-        PromptTemplate promptTemplate = new PromptTemplate(AIConstants.SKILL_GAP_PROMPT_TEMPLATE);
-        Prompt prompt = promptTemplate.create(Map.of("currentSkills", currentSkills));
+        String prompt = String.format(AIConstants.SKILL_GAP_PROMPT_TEMPLATE, currentSkills);
 
-        ChatResponse response = chatClient.call(prompt);
-        return response.getResult().getOutput().getContent();
+        return chatClient.prompt()
+                .user(prompt)
+                .call()
+                .content();
     }
 
     public String generateTrainingRecommendations(String skillsToDevelop, String currentLevel, String goals) {
-        PromptTemplate promptTemplate = new PromptTemplate(AIConstants.TRAINING_RECOMMENDATION_PROMPT_TEMPLATE);
-        Prompt prompt = promptTemplate.create(Map.of(
-                "skills", skillsToDevelop,
-                "currentLevel", currentLevel,
-                "goals", goals
-        ));
+        String prompt = String.format(AIConstants.TRAINING_RECOMMENDATION_PROMPT_TEMPLATE,
+                skillsToDevelop, currentLevel, goals);
 
-        ChatResponse response = chatClient.call(prompt);
-        return response.getResult().getOutput().getContent();
+        return chatClient.prompt()
+                .user(prompt)
+                .call()
+                .content();
     }
 
     public String generateCustomPrompt(String promptTemplate, Map<String, Object> variables) {
-        PromptTemplate template = new PromptTemplate(promptTemplate);
-        Prompt prompt = template.create(variables);
+        String prompt = promptTemplate;
+        for (Map.Entry<String, Object> entry : variables.entrySet()) {
+            prompt = prompt.replace("{" + entry.getKey() + "}", String.valueOf(entry.getValue()));
+        }
 
-        ChatResponse response = chatClient.call(prompt);
-        return response.getResult().getOutput().getContent();
+        return chatClient.prompt()
+                .user(prompt)
+                .call()
+                .content();
     }
 }

@@ -22,10 +22,9 @@ spring:
       api-key: ${OPENAI_API_KEY:your-openai-key-here}
 
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+    queues:
+      career-advice: career.advice.queue
+      notification: notification.queue
 
   cache:
     type: caffeine
