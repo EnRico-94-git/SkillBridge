@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/career")
 @RequiredArgsConstructor
 @Tag(name = "Career Advisor", description = "AI-powered career recommendations")
-public class CareerAdvisorController {
+public class CareerAdvisionController {
 
     private final CareerAdvisorService careerAdvisorService;
 
