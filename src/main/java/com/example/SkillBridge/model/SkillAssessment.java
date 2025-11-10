@@ -33,9 +33,16 @@ public class SkillAssessment {
     @Column(name = "CATEGORY", length = 50)
     private SkillCategory category;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS", length = 20)
+    private AssessmentStatus status = AssessmentStatus.DRAFT;
+
     @CreationTimestamp
     @Column(name = "ASSESSMENT_DATE", updatable = false)
     private LocalDateTime assessmentDate;
+
+    @Column(name = "COMPLETED_AT")
+    private LocalDateTime completedAt;
 
     public SkillAssessment() {}
 
@@ -44,5 +51,11 @@ public class SkillAssessment {
         this.skillName = skillName;
         this.skillLevel = skillLevel;
         this.category = category;
+        this.status = AssessmentStatus.DRAFT;
+    }
+
+    public void markAsCompleted() {
+        this.status = AssessmentStatus.COMPLETED;
+        this.completedAt = LocalDateTime.now();
     }
 }

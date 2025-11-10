@@ -1,5 +1,6 @@
 package com.example.SkillBridge.dto.request;
 
+import com.example.SkillBridge.model.AssessmentStatus;
 import com.example.SkillBridge.model.SkillCategory;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -19,4 +20,6 @@ public class AssessmentRequestDTO {
     private Integer skillLevel;
 
     private SkillCategory category;
+
+    private AssessmentStatus status; // Opcional
 }

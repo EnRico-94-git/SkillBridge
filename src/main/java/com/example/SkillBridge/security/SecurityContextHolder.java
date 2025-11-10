@@ -1,5 +1,6 @@
 package com.example.SkillBridge.security;
 
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -12,5 +13,9 @@ public class SecurityContextHolder {
 
     public boolean isAuthenticated() {
         return SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
+    }
+
+    private static SecurityContext getContext() {
+        return null;
     }
 }
